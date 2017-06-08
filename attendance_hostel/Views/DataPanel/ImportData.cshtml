@@ -1,0 +1,33 @@
+﻿@model IEnumerable<attendance_hostel.Models.attendance_ho>
+
+
+
+
+
+<form method="post" enctype="multipart/form-data">
+    <br />
+    <br />
+
+    <br /><br />
+    <div>
+        <input name="file" type="file" required />
+        <br />
+        <h3>Import Data</h3>
+        @ViewBag.Success
+        <h3>Student Details</h3>
+        <div class="form-group">
+            <button class="btn btn-success" value="g_details" name="command" type="submit">Import</button><br /><br />
+            <button class="btn btn-default"><a href="~/Datapanel/student">Downloade Sample File</a></button><br />
+
+        </div>        
+
+        <h3>Reasons for Absent</h3>
+        <button class="btn btn-success" value="reason" name="command" type="submit">import</button>
+        <button class="btn btn-default"><a href="~/datapanel/reason">downloade sample file</a></button><br /><br />
+        
+
+        <h3>Attendance Record</h3>
+        <button class="btn btn-default"><a href="~/datapanel/records_attendance">downloade Attendance records Excel</a></button><br />
+
+    </div>
+</form>

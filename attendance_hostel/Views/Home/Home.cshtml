@@ -1,0 +1,241 @@
+﻿
+@model IEnumerable< object >
+        @{
+            List<attendance_hostel.Models.Student_detail> a = Model.ToList()[0] as List<attendance_hostel.Models.Student_detail>;
+            List<attendance_hostel.Models.res_com> b = Model.ToList()[0] as List<attendance_hostel.Models.res_com>;
+        }
+
+@{
+    ViewBag.Title = "Home";
+}
+
+@{ 
+    attendance_hostel.Models.attendance_ho ca = new attendance_hostel.Models.attendance_ho();
+    List<object> mymodel = new List<object>();
+    mymodel.Add(ca.Reasons.ToList());
+}
+
+<h2>Home</h2>
+
+<form method="post" id="myform">
+    <div class="container body-content">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Filter</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <input type="date" class="form-control" name="date1" id="date1" maxlength="25" size="25" style="padding-top:4px; font-size:15px" />
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-control" id="mid" onkeyup="midfilter()" name="Member_Id" placeholder="Member Id" />
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-control" id="myInput" onchange="myFunction()" onload="myFunction()" onkeyup="myFunction()" name="Room" placeholder="Room No" value="@ViewBag.room" />
+                            </div>
+                            <div class="col-md-1">
+                                <input class="form-control" id="cup" onchange="cupfilter()" onload="cupfilter()" onkeyup="cupfilter()" name="cup" placeholder="cup" value="@ViewBag.cup" />
+                            </div>
+                            <div class="col-md-1">
+                                <input class="form-control" id="floor" onchange="floorfilter()" onload="floorfilter()" onkeyup="floorfilter()" name="floor" placeholder="Floor" value="@ViewBag.floor" />
+                            </div>
+                            <div class="col-md-1">
+                                <input class="form-control" id="block" onchange="blockfilter()" onload="blockfilter()" onkeyup="blockfilter()" name="block" placeholder="block" value="@ViewBag.block" />
+                            </div>                            
+                            <div class="col-md-3">
+                                @Html.DropDownList("Reasons", new SelectList(ca.Reasons, "reasons", "reasons"), new { @class = "form-control", style = "width:200px" })
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">Student Data</div>
+                    <div class="panel-body">
+                         <div class="row">
+                             <div class="col-md-12">
+                                 <table class="table table-hover" id="myTable">
+                                     <tr>
+                                         <th>
+                                             Member ID
+                                         </th>
+                                         <th>
+                                             Name
+                                         </th>
+                                         <th>
+                                             Floor
+                                         </th>
+                                         <th>
+                                             Room
+                                         </th>
+                                         <th>
+                                             Cup
+                                         </th>
+                                         <th>
+                                             Block
+                                         </th>
+                                         <th>
+                                             Standard
+                                         </th>
+                                         <th>
+                                             Academic Year
+                                         </th>
+                                         <th></th>
+                                     </tr>
+
+                                     @foreach (var item in a)
+            {
+                                         <tr>
+                                             <td>
+                                                 @Html.DisplayFor(modelItem => item.Member_id)
+                                             </td>
+                                             <td>
+                                                 @Html.DisplayFor(modelItem => item.Name)
+                                             </td>
+                                             <td>
+                                                 @Html.DisplayFor(modelItem => item.floor)
+                                             </td>
+                                             <td>
+                                                 @Html.DisplayFor(modelItem => item.room)
+                                             </td>
+                                             <td>
+                                                 @Html.DisplayFor(modelItem => item.cup)
+                                             </td>
+                                             <td>
+                                                 @Html.DisplayFor(modelItem => item.block)
+                                             </td>
+                                             <td>
+                                                 @Html.DisplayFor(modelItem => item.standard)
+                                             </td>
+                                             <td>
+                                                 @Html.DisplayFor(modelItem => item.A_year)
+                                             </td>
+                                             <td>
+                                                 <button name="s_id" type="submit" class="btn btn-danger" id="btnSubmit" value="@Html.DisplayFor(modelItem => item.Id)">Absent</button>
+
+                                             </td>
+                                         </tr>
+                                     }
+
+                                 </table>
+                             </div>                                
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    
+</form>
+
+
+
+        <script>
+
+
+            document.getElementById("date1").value = "@ViewBag.date11";
+            window.onload = myFunction();
+
+            function myFunction() {
+
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[3];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+
+        <script>
+            function midfilter() {
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("mid");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+
+        <script>
+            function cupfilter() {
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("cup");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[4];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+
+        <script>
+            function floorfilter() {
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("floor");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[2];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+
+        <script>
+            function blockfilter() {
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("block");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[5];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>

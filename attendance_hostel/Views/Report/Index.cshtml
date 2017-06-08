@@ -1,0 +1,351 @@
+﻿@model IEnumerable<object>
+@{
+            List<attendance_hostel.Models.Attendance_record> a = Model.ToList()[0] as List<attendance_hostel.Models.Attendance_record>;
+            List<attendance_hostel.Models.res_com> b = Model.ToList()[0] as List<attendance_hostel.Models.res_com>;
+}
+
+@{
+    ViewBag.Title = "Home";
+}
+
+@{
+    attendance_hostel.Models.attendance_ho ca = new attendance_hostel.Models.attendance_ho();
+    List<object> mymodel = new List<object>();
+    mymodel.Add(ca.Reasons.ToList());
+}
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<h2>Report</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Report</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/datepicker3.css" rel="stylesheet">
+    <link href="~/Content/styles.css" rel="stylesheet">    <!--Icons-->
+    <script src="~/Scripts/lumino.glyphs.js"></script>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <a class="navbar-brand" href="#"></a>
+                </button>
+                @Html.ActionLink("Gurukul Hostel Attendance", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @if (Session["Roal"].ToString() == "admin")
+                {
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="~/Home/Home">Home</a></li>
+                        <li><a href="~/res_com/">Reasons</a></li>
+                        <li><a href="~/Student_detail/">Student Details</a></li>
+                        <li><a href="~/Datapanel/ImportData">Data Import</a></li>
+                        <li><a href="~/Logins/">Account Details</a></li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="~/Home/Home">Home</a></li>
+                    </ul>
+                }
+                <ul class="nav navbar-nav navbar-right"><li><a href="../Home/Logout"><span class="glyphicon glyphicon-log-out"></span> Logout </a></li></ul>
+                <ul class="nav navbar-nav navbar-right"><li><a href="#"><span class="glyphicon glyphicon-user"></span> Jay Swaminarayan @ViewBag.user </a></li></ul>
+
+            </div>
+        </div>
+    </div>
+
+
+    @*<form method="post" name="MYFORM">
+        <input name="floor" class="form-control" />
+        <input name="date1" type="date" />
+        <button type="submit" class="btn btn-success">Get Absent</button>
+        <button type="button" class="btn btn-outline btn-primary">Default</button>
+
+
+
+        @ViewBag.absent_count
+        @ViewBag.total_count
+        @ViewBag.present_count
+    </form>*@
+
+  
+    
+
+            <div class="container body-content">
+
+                <form method="post" name="myform">
+                    <div class="col-md-3">
+                        <div class="panel panel-blue">
+                            <div class="panel-heading">Date</div>
+                            <div class="panel-body">
+                                    <input name="date1" id="date1" type="date" class="form-control has-error" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Get Report Floor or Block Wise</div>
+                            <div class="panel-body">
+                                <div class="col-md-3">
+                                    <input placeholder="Floor" name="floor" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <button name="command" value="_floor" type="submit" class="btn btn-outline btn-primary">Floor Report</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <input placeholder="Block" name="block" class="form-control" />
+                                </div>                                
+                                <div class="col-md-2">
+                                    <button name="command" value="_block" type="submit" class="btn btn-outline btn-primary">Block Report</button>
+                                </div>
+                                <div class="col-md-1">
+                                    <button name="command" value="_Whole" type="submit" class="btn btn-outline btn-danger">Full Gurukul</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </form>               
+
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6 col-lg-3">
+                            <div class="panel panel-blue panel-widget ">
+                                <div class="row no-padding">
+                                    <div class="col-sm-3 col-lg-5 widget-left">
+                                        <svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
+                                    </div>
+                                    <div class="col-sm-9 col-lg-7 widget-right">
+                                        <div class="large">@ViewBag.present_count</div>
+                                        <div class="text-muted">Student's Present</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 col-lg-3">
+                            <div class="panel panel-orange panel-widget">
+                                <div class="row no-padding">
+                                    <div class="col-sm-3 col-lg-5 widget-left">
+                                        <svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
+                                    </div>
+                                    <div class="col-sm-9 col-lg-7 widget-right">
+                                        <div class="large">@ViewBag.absent_count</div>
+                                        <div class="text-muted">Student's Absent</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="col-xs-12 col-md-6 col-lg-3">
+                            <div class="panel panel-red panel-widget">
+                                <div class="row no-padding">
+                                    <div class="col-sm-3 col-lg-5 widget-left">
+                                        <svg class="glyph stroked app-window-with-content"><use xlink:href="#stroked-app-window-with-content"></use></svg>
+                                    </div>
+                                    <div class="col-sm-9 col-lg-7 widget-right">
+                                        <div class="large">@ViewBag.total_count</div>
+                                        <div class="text-muted">Total Students</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 col-lg-3">
+                            <div class="panel panel-teal panel-widget">
+                                <div class="row no-padding">
+                                    <div class="col-sm-3 col-lg-5 widget-left">
+                                        <svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
+                                    </div>
+                                    <div class="col-sm-9 col-lg-7 widget-right">    
+                                        <div class="large">@ViewBag.floor @ViewBag.block</div>                                    
+                                        <div class="text-muted">Floor/Block</div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--/.row-->
+
+
+
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel panel-default">
+                                <div class="panel-body easypiechart-panel">
+                                    <h4>Present Student</h4>
+                                    <div class="easypiechart" id="easypiechart-blue" data-percent="@ViewBag.present_per">
+                                        <span class="percent">@ViewBag.present_per</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="panel panel-default">
+                                <div class="panel-body easypiechart-panel">
+                                    <h4>Absent Student</h4>
+                                    <div class="easypiechart" id="easypiechart-orange" data-percent="@ViewBag.absent_per">
+                                        <span class="percent">@ViewBag.absent_per</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                        @*<div class="col-xs-6 col-md-3">
+                            <div class="panel panel-default">
+                                <div class="panel-body easypiechart-panel">
+                                    <h4>Visitors</h4>
+                                    <div class="easypiechart" id="easypiechart-red" data-percent="27">
+                                        <span class="percent">27%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                        </div>
+                        
+                            
+                            <button class="btn btn-outline btn-success">
+                            <a style="color:azure" href="~/datapanel/records_attendance">Downloade All Abset Records in Excel</a></button>
+
+             
+                        
+                       
+<form method="post">
+    <div class="row">        
+        <div class="col-md-12">            
+            <table class="table table-hover" id="myTable">
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Member ID
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Floor
+                    </th>
+                    <th>
+                        Room
+                    </th>
+                    <th>
+                        Cup
+                    </th>
+                    <th>
+                        Block
+                    </th>
+                    <th>
+                        Standard
+                    </th>
+                    <th>
+                        Academic Year
+                    </th>
+                    <th>
+                       Reason
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in a)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Member_id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.floor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.room)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cup)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.block)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.standard)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.A_year)
+                        </td>   
+                        <td>
+                            @Html.DisplayFor(modelItem => item.reason)
+                        </td>                      
+                    </tr>
+                }
+
+            </table>
+        </div>
+</form>
+
+
+                    
+                </div>
+
+
+
+
+
+
+    <script>
+        document.getElementById("date1").value = "@ViewBag.formated_date";
+    </script>
+
+            <script src="~/Scripts/jquery-1.11.1.min.js"></script>
+            <script src="~/Scripts/bootstrap.min.js"></script>
+            <script src="~/Scripts/chart.min.js"></script>
+            <script src="~/Scripts/chart-data.js"></script>
+            <script src="~/Scripts/easypiechart.js"></script>
+            <script src="~/Scripts/easypiechart-data.js"></script>
+            <script src="~/Scripts/bootstrap-datepicker.js"></script>
+            <script>
+                $('#calendar').datepicker({
+                });
+
+                !function ($) {
+                    $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
+                        $(this).find('em:first').toggleClass("glyphicon-minus");
+                    });
+                    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+                }(window.jQuery);
+
+                $(window).on('resize', function () {
+                    if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+                })
+                $(window).on('resize', function () {
+                    if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+                })
+            </script>
+                <footer>
+                    <br /><hr />
+                    <p>&copy; @DateTime.Now.Year - Gurukul Arts, 2017</p>
+                </footer>
+</body>
+
+</html>
