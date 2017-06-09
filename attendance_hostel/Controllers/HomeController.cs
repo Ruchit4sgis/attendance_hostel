@@ -25,6 +25,7 @@ namespace attendance_hostel.Controllers
             {
                 using (var ctx = new attendance_ho())
                 {
+                    roal = Session["Roal"].ToString();
                     mymodel.Add(ctx.Student_detail.SqlQuery("Select * from Student_detail where floor = '" + roal+"'").ToList());
                     ViewBag.id = new SelectList(a.Reasons, "id", "c_Attributs");
                 }
@@ -61,6 +62,7 @@ namespace attendance_hostel.Controllers
             {
                 using (var ctx = new attendance_ho())
                 {
+                    roal = Session["roal"].ToString();
                     mymodel.Add(ctx.Student_detail.SqlQuery("Select * from Student_detail where floor = '" + roal + "'").ToList());
                     ViewBag.id = new SelectList(a.Reasons, "id", "c_Attributs");
                 }

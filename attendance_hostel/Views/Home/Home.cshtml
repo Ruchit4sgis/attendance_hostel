@@ -67,58 +67,64 @@
                                          <th>
                                              Name
                                          </th>
-                                         <th>
-                                             Floor
-                                         </th>
-                                         <th>
+                                         
+                                         <th class="hidden-xs">
                                              Room
                                          </th>
-                                         <th>
+                                         <th class="hidden-xs">
                                              Cup
                                          </th>
-                                         <th>
+
+                                         <th class="hidden-xs">
+                                             Floor
+                                         </th>
+                                         <th class="hidden-xs">
                                              Block
                                          </th>
-                                         <th>
+                                         <th class="hidden-xs">
                                              Standard
                                          </th>
-                                         <th>
+                                         <th class="hidden-xs">
                                              Academic Year
                                          </th>
-                                         <th></th>
+                                         <th>Action</th>
+                                         
                                      </tr>
 
                                      @foreach (var item in a)
             {
                                          <tr>
                                              <td>
-                                                 @Html.DisplayFor(modelItem => item.Member_id)
+                                                 <span class="text-info">@Html.DisplayFor(modelItem => item.Member_id)</span>
+                                                 <span class="hidden-lg hidden-md hidden-sm">@Html.DisplayFor(modelItem => item.block)-@Html.DisplayFor(modelItem => item.room)/@Html.DisplayFor(modelItem => item.cup)</span>
                                              </td>
                                              <td>
-                                                 @Html.DisplayFor(modelItem => item.Name)
-                                             </td>
-                                             <td>
-                                                 @Html.DisplayFor(modelItem => item.floor)
-                                             </td>
-                                             <td>
+                                                 <span class="text-info">@Html.DisplayFor(modelItem => item.Name)</span>
+                                                 <span class="hidden-lg hidden-md hidden-sm">@Html.DisplayFor(modelItem => item.standard)</span>
+</td>
+                                            
+                                             <td class="hidden-xs">
                                                  @Html.DisplayFor(modelItem => item.room)
-                                             </td>
-                                             <td>
+                                             </td>                                             
+                                             <td class="hidden-xs">
                                                  @Html.DisplayFor(modelItem => item.cup)
                                              </td>
-                                             <td>
+                                             <td class="hidden-xs">
+                                                 @Html.DisplayFor(modelItem => item.floor)
+                                             </td>
+                                             <td class="hidden-xs">
                                                  @Html.DisplayFor(modelItem => item.block)
                                              </td>
-                                             <td>
+                                             <td class="hidden-xs">
                                                  @Html.DisplayFor(modelItem => item.standard)
                                              </td>
-                                             <td>
+                                             <td class="hidden-xs">
                                                  @Html.DisplayFor(modelItem => item.A_year)
                                              </td>
                                              <td>
                                                  <button name="s_id" type="submit" class="btn btn-danger" id="btnSubmit" value="@Html.DisplayFor(modelItem => item.Id)">Absent</button>
-
                                              </td>
+                                             
                                          </tr>
                                      }
 
@@ -135,9 +141,14 @@
 
 
         <script>
-
-
-            document.getElementById("date1").value = "@ViewBag.date11";
+           document.getElementById("date1").value = "@ViewBag.date11";
+            $a = @ViewBag.date11+"";
+            if($a == null || $a == "")
+            {
+                document.getElementById("date1").value = "@DateTime.Today.ToString("yyyy-MM-dd")";
+            }
+           
+           
             window.onload = myFunction();
 
             function myFunction() {
@@ -148,7 +159,7 @@
                 table = document.getElementById("myTable");
                 tr = table.getElementsByTagName("tr");
                 for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[3];
+                    td = tr[i].getElementsByTagName("td")[2];
                     if (td) {
                         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                             tr[i].style.display = "";
@@ -188,7 +199,7 @@
                 table = document.getElementById("myTable");
                 tr = table.getElementsByTagName("tr");
                 for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[4];
+                    td = tr[i].getElementsByTagName("td")[3];
                     if (td) {
                         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                             tr[i].style.display = "";
@@ -206,9 +217,9 @@
                 input = document.getElementById("floor");
                 filter = input.value.toUpperCase();
                 table = document.getElementById("myTable");
-                tr = table.getElementsByTagName("tr");
+                tr = table.getEllementsByTagName("tr");
                 for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[2];
+                    td = tr[i].getElementsByTagName("td")[4];
                     if (td) {
                         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                             tr[i].style.display = "";

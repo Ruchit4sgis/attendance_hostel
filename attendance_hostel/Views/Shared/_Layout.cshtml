@@ -11,6 +11,11 @@
     <link href="~/Content/datepicker3.css" rel="stylesheet">
     <link href="~/Content/styles.css" rel="stylesheet">    <!--Icons-->
     <script src="~/Scripts/lumino.glyphs.js"></script>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'></script>
+    <script type='text/javascript' src='loadImg.js'></script>
+   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
 </head>
 @{ if (Session["UserName"] != null)
     {
@@ -21,82 +26,85 @@
         Response.Redirect("~/Home/Index");
     }
 }
-<body">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <a class="navbar-brand" href="#"></a>
-                </button>
-                @Html.ActionLink("Gurukul Hostel Attendance", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                @if (Session["Roal"].ToString() == "admin")
-                {
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="~/Home/Home">Home</a></li>
-                        <li><a href="~/Attendance_record/">Absent Record</a></li>
-                        <li><a href="~/res_com/">Reasons</a></li>
-                        <li><a href="~/Student_detail/">Student Details</a></li>
-                        <li><a href="~/Datapanel/ImportData">Data Import</a></li>
-                        <li><a href="~/Logins/">Account Details</a></li>
-                        <li><a href="~/Report/">REPORT</a></li>
-                    </ul>
-                }
-                else
-                {
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="~/Home/Home">Home</a></li>
-                        <li><a href="~/Attendance_record/">Absent Record</a></li>
-                    </ul>
-                }
-               
-                <ul class="nav navbar-nav navbar-right"><li><a href="../Home/Logout"><span class="glyphicon glyphicon-log-out"></span> Logout </a></li></ul>
-                <ul class="nav navbar-nav navbar-right"><li><a href="#"><span class="glyphicon glyphicon-user"></span> Jay Swaminarayan @ViewBag.user </a></li></ul>
-                
+
+
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
+                    @Html.ActionLink("Gurukul Hostel Attendance", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    @if (Session["Roal"].ToString() == "admin")
+                    {
+                        <ul class="nav navbar-nav">
+                            <li><a href="~/Home/Home">Home</a></li>
+                            <li><a href="~/Attendance_record/">Absent Record</a></li>
+                            <li><a href="~/res_com/">Reasons</a></li>
+                            <li><a href="~/Student_detail/">Student Details</a></li>
+                            <li><a href="~/Datapanel/ImportData">Data Import</a></li>
+                            <li><a href="~/Logins/">Account Details</a></li>
+                            <li><a href="~/Report/">REPORT</a></li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="~/Home/Home">Home</a></li>
+                            <li><a href="~/Attendance_record/">Absent Record</a></li>
+                        </ul>
+                    }
+
+                    <ul class="nav navbar-nav navbar-right"><li><a href="../Home/Logout"><span class="glyphicon glyphicon-log-out"></span> Logout </a></li></ul>
+                    <ul class="nav navbar-nav navbar-right"><li><a href="#"><span class="glyphicon glyphicon-user"></span> Jay Swaminarayan @ViewBag.user </a></li></ul>
+
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Gurukul Arts, 2017</p>
-        </footer>
-    </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Gurukul Arts, 2017</p>
+            </footer>
+        </div>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery-1.11.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/chart.min.js"></script>
-    <script src="~/Scripts/chart-data.js"></script>
-    <script src="~/Scripts/easypiechart.js"></script>
-    <script src="~/Scripts/easypiechart-data.js"></script>
-    <script src="~/Scripts/bootstrap-datepicker.js"></script>
-    <script>
-                $('#calendar').datepicker({
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/jquery-1.11.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/chart.min.js"></script>
+        <script src="~/Scripts/chart-data.js"></script>
+        <script src="~/Scripts/easypiechart.js"></script>
+        <script src="~/Scripts/easypiechart-data.js"></script>
+        <script src="~/Scripts/bootstrap-datepicker.js"></script>
+        <script>
+            $('#calendar').datepicker({
+            });
+
+            !function ($) {
+                $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
+                    $(this).find('em:first').toggleClass("glyphicon-minus");
                 });
+                $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+            }(window.jQuery);
 
-                !function ($) {
-                    $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
-                        $(this).find('em:first').toggleClass("glyphicon-minus");
-                    });
-                    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-                }(window.jQuery);
+            $(window).on('resize', function () {
+                if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+            })
+            $(window).on('resize', function () {
+                if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+            })
+        </script>
+    </body>
 
-                $(window).on('resize', function () {
-                    if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-                })
-                $(window).on('resize', function () {
-                    if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-                })
-    </script>
-</body>
+
 </html>
 
 

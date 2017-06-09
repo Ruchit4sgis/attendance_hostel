@@ -4,104 +4,220 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-@if (Session["Roal"].ToString() == "admin")
-{
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-}
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.reason)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Member_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.floor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.room)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cup)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.block)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.standard)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.A_year)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.incharge)
-        </th>
-        <th></th>
-    </tr>
+    <h2>Index</h2>
+    @if (Session["Roal"].ToString() == "admin")
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
+<form method="post" id="myform">
+    <div class="container body-content">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Absent Data</div>
+                <div class="panel-body">
+                    <div class="col-md-2">
+                        <input class="form-control" onchange="datefilter()" onload="datefilter()" placeholder="dd/mm/yyy" name="date1" id="date1" onkeyup=" datefilter()" maxlength="25" size="25" style="padding-top:4px; font-size:15px" />
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" id="mid" onkeyup="midfilter()" name="Member_Id" placeholder="Member Id" />
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" id="room" onkeyup="roomfilter()" name="room" placeholder="Room" />
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-12">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">Filter</div>
+                    <div class="panel-body">
+                        <table class="table table-hover" id="myTable">
+                            <tr>
+                                <th class="hidden-xs">
+                                    @Html.DisplayNameFor(model => model.date)
+                                </th>
+                                <th class="hidden-xs">
+                                    @Html.DisplayNameFor(model => model.reason)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Member_id)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th class="hidden-xs">
+                                    @Html.DisplayNameFor(model => model.floor)
+                                </th>
+                                <th class="hidden-xs">
+                                    @Html.DisplayNameFor(model => model.room)
+                                </th>
+                                <th class="hidden-xs">
+                                    @Html.DisplayNameFor(model => model.cup)
+                                </th>
+                                <th class="hidden-xs">
+                                    @Html.DisplayNameFor(model => model.block)
+                                </th>
+                                <th class="hidden-xs">
+                                    @Html.DisplayNameFor(model => model.standard)
+                                </th>
+                                <th class="hidden-xs">
+                                    @Html.DisplayNameFor(model => model.A_year)
+                                </th>
+                                <th class="hidden-xs">
+                                    @Html.DisplayNameFor(model => model.incharge)
+                                </th>
+                                <th></th>
+                            </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.reason)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Member_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.floor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.room)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cup)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.block)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.standard)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.A_year)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.incharge)
-        </td>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="hidden-xs">
+                                        @Html.DisplayFor(modelItem => item.date)
+                                    </td>
+                                    <td class="hidden-xs">
+                                        @Html.DisplayFor(modelItem => item.reason)
+                                    </td>
+                                    <td>
+                                        <span class="text-info">@Html.DisplayFor(modelItem => item.Member_id)</span>
+                                        <span class="hidden-lg hidden-md hidden-sm">@Html.DisplayFor(modelItem => item.block) - @Html.DisplayFor(modelItem => item.room) - @Html.DisplayFor(modelItem => item.cup) </span>
+                                           
+</td>
+                                    <td>
+                                        <span class="text-info">@Html.DisplayFor(modelItem => item.Name)</span>
+                                        <span class="hidden-lg hidden-md hidden-sm">@Html.DisplayFor(modelItem => item.standard)- @Html.DisplayFor(modelItem => item.A_year) - @Html.DisplayFor(modelItem => item.date) - @Html.DisplayFor(modelItem => item.incharge)</span>
+                                        
+                                    </td>
+                                    <td class="hidden-xs">
+                                        @Html.DisplayFor(modelItem => item.floor)
+                                    </td>
+                                    <td class="hidden-xs">
+                                        @Html.DisplayFor(modelItem => item.room)
+                                    </td>
+                                    <td class="hidden-xs">
+                                        @Html.DisplayFor(modelItem => item.cup)
+                                    </td>
+                                    <td class="hidden-xs">
+                                        @Html.DisplayFor(modelItem => item.block)
+                                    </td>
+                                    <td class="hidden-xs">
+                                        @Html.DisplayFor(modelItem => item.standard)
+                                    </td>
+                                    <td class="hidden-xs">
+                                        @Html.DisplayFor(modelItem => item.A_year)
+                                    </td>
+                                    <td class="hidden-xs">
+                                        @Html.DisplayFor(modelItem => item.incharge)
+                                    </td>
 
+
+                                    @if (Session["Roal"].ToString() == "admin")
+                                    {
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                                        </td>
+                                    }
+                                    <td></td>
+
+
+
+
+                                </tr>
+                            }
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+                        
+     </div>
+</form>
+    
+    <script>    
         
-            @if (Session["Roal"].ToString() == "admin")
-            {
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                </td>
+        window.onload = datefilter();
+
+        function myFunction() {
+
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
             }
-        <td>
-            
-        </td>
-            
-                
+        }
+    </script>
 
-
-    </tr>
-}
-
-</table>
+<script>
+            function midfilter() {
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("mid");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[2];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+</script>
+<script>
+    window.onload = datefilter();
+            function datefilter() {
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("date1");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+</script>
+<script>
+    
+            function roomfilter() {
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("room");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[5];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+</script>

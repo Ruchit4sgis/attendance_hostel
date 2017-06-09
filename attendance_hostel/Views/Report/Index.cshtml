@@ -45,7 +45,6 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <a class="navbar-brand" href="#"></a>
                 </button>
                 @Html.ActionLink("Gurukul Hostel Attendance", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
@@ -53,11 +52,13 @@
                 @if (Session["Roal"].ToString() == "admin")
                 {
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="~/Home/Home">Home</a></li>
+                        <li><a href="~/Home/Home">Home</a></li>
+                        <li><a href="~/Attendance_record/">Absent Record</a></li>
                         <li><a href="~/res_com/">Reasons</a></li>
                         <li><a href="~/Student_detail/">Student Details</a></li>
                         <li><a href="~/Datapanel/ImportData">Data Import</a></li>
                         <li><a href="~/Logins/">Account Details</a></li>
+                        <li><a href="~/Report/">REPORT</a></li>
                     </ul>
                 }
                 else
@@ -231,7 +232,7 @@
         <div class="col-md-12">            
             <table class="table table-hover" id="myTable">
                 <tr>
-                    <th>
+                    <th class="hidden-xs">
                         Date
                     </th>
                     <th>
@@ -240,22 +241,22 @@
                     <th>
                         Name
                     </th>
-                    <th>
+                    <th class="hidden-xs">
                         Floor
                     </th>
-                    <th>
+                    <th class="hidden-xs">
                         Room
                     </th>
-                    <th>
+                    <th class="hidden-xs">
                         Cup
                     </th>
-                    <th>
+                    <th class="hidden-xs">
                         Block
                     </th>
-                    <th>
+                    <th class="hidden-xs">
                         Standard
                     </th>
-                    <th>
+                    <th class="hidden-xs">
                         Academic Year
                     </th>
                     <th>
@@ -267,35 +268,38 @@
                 @foreach (var item in a)
             {
                     <tr>
-                        <td>
+                        <td class="hidden-xs">
                             @Html.DisplayFor(modelItem => item.date)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Member_id)
+                        <td >
+                             <span class="text-info">@Html.DisplayFor(modelItem => item.Member_id)</span>
+                            <span class="hidden-lg hidden-md hidden-sm">@Html.DisplayFor(modelItem => item.block) - @Html.DisplayFor(modelItem => item.room) - @Html.DisplayFor(modelItem => item.cup)</span>
+</td>
+                        <td >
+                            <span class="text-info">@Html.DisplayFor(modelItem => item.Name)</span>
+                            <span class="hidden-lg hidden-md hidden-sm">@Html.DisplayFor(modelItem => item.standard) - @Html.DisplayFor(modelItem => item.A_year)</span>
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
+                        <td class="hidden-xs">
                             @Html.DisplayFor(modelItem => item.floor)
                         </td>
-                        <td>
+                        <td class="hidden-xs">
                             @Html.DisplayFor(modelItem => item.room)
                         </td>
-                        <td>
+                        <td class="hidden-xs">
                             @Html.DisplayFor(modelItem => item.cup)
                         </td>
-                        <td>
+                        <td class="hidden-xs">
                             @Html.DisplayFor(modelItem => item.block)
                         </td>
-                        <td>
+                        <td class="hidden-xs">
                             @Html.DisplayFor(modelItem => item.standard)
                         </td>
-                        <td>
+                        <td class="hidden-xs">
                             @Html.DisplayFor(modelItem => item.A_year)
                         </td>   
                         <td>
-                            @Html.DisplayFor(modelItem => item.reason)
+                            <span class="text-info">@Html.DisplayFor(modelItem => item.reason)</span>
+                            <span class="hidden-lg hidden-md hidden-sm">@Html.DisplayFor(modelItem => item.date)</span>
                         </td>                      
                     </tr>
                 }
@@ -315,6 +319,12 @@
 
     <script>
         document.getElementById("date1").value = "@ViewBag.formated_date";
+        $a = @ViewBag.formated_date+"";
+        if($a == null || $a == "")
+        {
+            document.getElementById("date1").value = "@DateTime.Today.ToString("yyyy-MM-dd")";
+        }
+        
     </script>
 
             <script src="~/Scripts/jquery-1.11.1.min.js"></script>
