@@ -9,67 +9,223 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Member_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.floor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.room)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cup)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.block)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.standard)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.A_year)
-        </th>
-        <th></th>
-    </tr>
+<div class="col-md-12">
+    <div class="panel panel-info">
+        <div class="panel-heading">Filter</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <input class="form-control" id="mid" onkeyup="midfilter()" name="Member_Id" placeholder="Member Id" />
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" id="myInput" onchange="myFunction()" onload="myFunction()" onkeyup="myFunction()" name="Room" placeholder="Room No" value="@ViewBag.room" />
+                    </div>
+                    <div class="col-md-1">
+                        <input class="form-control" id="cup" onchange="cupfilter()" onload="cupfilter()" onkeyup="cupfilter()" name="cup" placeholder="cup" value="@ViewBag.cup" />
+                    </div>
+                    <div class="col-md-1">
+                        <input class="form-control" id="floor" onchange="floorfilter()" onload="floorfilter()" onkeyup="floorfilter()" name="floor" placeholder="Floor" value="@ViewBag.floor" />
+                    </div>
+                    <div class="col-md-1">
+                        <input class="form-control" id="block" onchange="blockfilter()" onload="blockfilter()" onkeyup="blockfilter()" name="block" placeholder="block" value="@ViewBag.block" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="panel panel-success">
+        <div class="panel-heading">Student Data</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover" id="myTable">
+                        <tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Member_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.floor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.room)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cup)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.block)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.standard)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.A_year)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+                            <th>
+                                Member ID
+                            </th>
+                            <th>
+                                Name
+                            </th>
 
-</table>
+                            <th class="hidden-xs">
+                                Room
+                            </th>
+                            <th class="hidden-xs">
+                                Cup
+                            </th>
+
+                            <th class="hidden-xs">
+                                Floor
+                            </th>
+                            <th class="hidden-xs">
+                                Block
+                            </th>
+                            <th class="hidden-xs">
+                                Standard
+                            </th>
+                            <th class="hidden-xs">
+                                Academic Year
+                            </th>
+                            <th> Action</th>
+                        </tr>
+
+                        @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    <span class="text-info">@Html.DisplayFor(modelItem => item.Member_id)</span>
+                    <span class="hidden-lg hidden-md hidden-sm">@Html.DisplayFor(modelItem => item.block)-@Html.DisplayFor(modelItem => item.room)/@Html.DisplayFor(modelItem => item.cup)</span>
+                </td>
+                <td>
+                    <span class="text-info">@Html.DisplayFor(modelItem => item.Name)</span>
+                    <span class="hidden-lg hidden-md hidden-sm">@Html.DisplayFor(modelItem => item.standard)</span>
+                </td>
+
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.room)
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.cup)
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.floor)
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.block)
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.standard)
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.A_year)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+            }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                
+
+
+                    <script>
+                        document.getElementById("date1").value = "@ViewBag.date11";
+                        $a = @ViewBag.date11 +"";
+                        if ($a == null || $a == "") {
+                            document.getElementById("date1").value = "@DateTime.Today.ToString("yyyy-MM-dd")";
+                        }
+
+
+                        window.onload = myFunction();
+
+                        function myFunction() {
+
+                            var input, filter, table, tr, td, i;
+                            input = document.getElementById("myInput");
+                            filter = input.value.toUpperCase();
+                            table = document.getElementById("myTable");
+                            tr = table.getElementsByTagName("tr");
+                            for (i = 0; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[2];
+                                if (td) {
+                                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        }
+                    </script>
+
+                    <script>
+                        function midfilter() {
+                            var input, filter, table, tr, td, i;
+                            input = document.getElementById("mid");
+                            filter = input.value.toUpperCase();
+                            table = document.getElementById("myTable");
+                            tr = table.getElementsByTagName("tr");
+                            for (i = 0; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[0];
+                                if (td) {
+                                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        }
+                    </script>
+
+                    <script>
+                        function cupfilter() {
+                            var input, filter, table, tr, td, i;
+                            input = document.getElementById("cup");
+                            filter = input.value.toUpperCase();
+                            table = document.getElementById("myTable");
+                            tr = table.getElementsByTagName("tr");
+                            for (i = 0; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[3];
+                                if (td) {
+                                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        }
+                    </script>
+
+                    <script>
+                        function floorfilter() {
+                            var input, filter, table, tr, td, i;
+                            input = document.getElementById("floor");
+                            filter = input.value.toUpperCase();
+                            table = document.getElementById("myTable");
+                            tr = table.getEllementsByTagName("tr");
+                            for (i = 0; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[4];
+                                if (td) {
+                                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        }
+                    </script>
+
+                    <script>
+                        function blockfilter() {
+                            var input, filter, table, tr, td, i;
+                            input = document.getElementById("block");
+                            filter = input.value.toUpperCase();
+                            table = document.getElementById("myTable");
+                            tr = table.getElementsByTagName("tr");
+                            for (i = 0; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[5];
+                                if (td) {
+                                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        }
+                    </script>
